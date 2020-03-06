@@ -14,12 +14,11 @@ name2cid <- function(query) {
     wait_time <- 0.2
     for (i in seq(1, length(cid))) {
       prolog <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
-      input <- "/compound/name"
+      input <- "/compound/name/"
       output <- "/cids/JSON?"
-      qurl <- paste0(prolog, input, output, query[i])
+      qurl <- paste0(prolog, input, query[i], output)
       
       pubchem_content <- try(httr::content(POST(qurl,
-                                                body = paste0("name=", query[i]), 
                                                 type = "text", 
                                                 encoding = "UTF-8")),
                              silent = TRUE)
@@ -39,12 +38,11 @@ name2cid <- function(query) {
     return(cid)
   } else {
     prolog <- "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
-    input <- "/compound/name"
+    input <- "/compound/name/"
     output <- "/cids/JSON?"
-    qurl <- paste0(prolog, input, output, query)
+    qurl <- paste0(prolog, input, query, output)
     
     pubchem_content <- try(httr::content(POST(qurl,
-                                              body = paste0("name=", query), 
                                               type = "text", 
                                               encoding = "UTF-8")),
                            silent = TRUE)
